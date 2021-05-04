@@ -1,7 +1,10 @@
-# Overview
-At my day job, I work majorly with Frontend pulling data from a CMS like WordPress. I have never for once had to work with things like Authentication, Authorization and so on. In order better position myself, I will be dedicating an hour each weekday in the month of May to learn various firebase tools.
+# Authentication Overview
+This allows you quickly create login and signup pages for users while also being able to authorize them after they have successfully logged in to your app
 
-Each tool will be in a separate branch listed below. I will be using ReactJS as the frontend Framework throughout the project.
+# Resources
+- [React Authentication Crash Course With Firebase And Routing by Web Dev Simplified on Youtube](https://www.youtube.com/watch?v=PKwu15ldZ7k)
 
+### [Read Journal](./journal/README.md)
+### [Design](#)
+### [Deployed site](#)
 
-Cheers!
