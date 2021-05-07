@@ -4,6 +4,6 @@ At my day job, I work majorly with Frontend pulling data from a CMS like WordPre
 Each tool will be in a separate branch listed below. I will be using ReactJS as the frontend Framework throughout the project.
 
 # Branches
-- [Authentication](https://github.com/aremu-smog/firebase-may/tree/main)
+- [Authentication](https://github.com/aremu-smog/firebase-may/tree/auth)
 
 Cheers!
