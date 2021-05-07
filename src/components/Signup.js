@@ -9,6 +9,28 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { signup, currentUser } = useAuth();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
+      setError("Passwords must match!");
+    } else {
+      setLoading(true);
+      try {
+        setError("");
+        signup(emailRef.current.value, passwordRef.current.value);
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+        passwordConfirmationRef.current.value = "";
+      } catch {
+        setError(`${emailRef.current.value}, ${passwordRef.current.value}`);
+      }
+
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Card>
