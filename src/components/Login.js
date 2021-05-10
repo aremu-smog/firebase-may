@@ -1,36 +1,30 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 
-export default function Signup() {
+const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmationRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
-  const { signup } = useAuth();
+  const { login } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
-      setError("Passwords must match!");
-    } else {
-      setLoading(true);
-      try {
-        setError("");
-        signup(emailRef.current.value, passwordRef.current.value);
-        emailRef.current.value = "";
-        passwordRef.current.value = "";
-        passwordConfirmationRef.current.value = "";
-        history.push("/");
-      } catch {
-        setError(`${emailRef.current.value}, ${passwordRef.current.value}`);
-      }
-
+    setLoading(true);
+    try {
+      setError("");
+      login(emailRef.current.value, passwordRef.current.value);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      setLoading(false);
+      history.push("/");
+    } catch {
+      setError(`${emailRef.current.value}, ${passwordRef.current.value}`);
       setLoading(false);
     }
   };
@@ -39,7 +33,7 @@ export default function Signup() {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Sign up</h2>
+          <h2 className="text-center mb-4">Log In</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
@@ -55,23 +49,19 @@ export default function Signup() {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control
-                type="password"
-                required
-                ref={passwordConfirmationRef}
-              ></Form.Control>
-            </Form.Group>
             <Button disabled={loading} type="submit" className="w-100">
-              Sign up
+              Login
             </Button>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login">Log In</Link>
+        Need an account? <Link to="/signup">Sign up</Link>
       </div>
     </>
   );
-}
+};
+
+Login.propTypes = {};
+
+export default Login;
