@@ -14,6 +14,14 @@ export const AuthProvider = ({ children }) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
+  const logout = () => {
+    auth.signOut();
+  };
+
+  const resetPassword = (email) => {
+    auth.sendPasswordResetEmail(email);
+  };
+
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const value = { currentUser, signup, login };
+  const value = { currentUser, signup, login, logout, resetPassword };
 
   return (
     <AuthContext.Provider value={value}>
