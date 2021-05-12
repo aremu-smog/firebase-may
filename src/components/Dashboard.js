@@ -29,7 +29,7 @@ const Dashboard = () => {
             <b>Email:</b>
             {currentUser.email}
           </p>
-          <Link to="/update" className="btn btn-primary w-100">
+          <Link to="/update-profile" className="btn btn-primary w-100">
             Update
           </Link>
         </Card.Body>

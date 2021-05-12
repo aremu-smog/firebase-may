@@ -15,16 +15,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
     try {
+      setLoading(true);
       setError("");
-      login(emailRef.current.value, passwordRef.current.value);
+      await login(emailRef.current.value, passwordRef.current.value);
       emailRef.current.value = "";
       passwordRef.current.value = "";
-      setLoading(false);
       history.push("/");
     } catch {
-      setError(`${emailRef.current.value}, ${passwordRef.current.value}`);
+      setError(`Failed to log you in`);
       setLoading(false);
     }
   };
