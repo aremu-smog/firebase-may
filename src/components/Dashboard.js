@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Dashboard = () => {
+  const { currentUser } = useAuth();
   return (
     <div style={{ minWidth: "400px" }}>
       <Card className="w-100">
@@ -10,7 +12,7 @@ const Dashboard = () => {
           <h2 className="text-center mb-4">Dashboard</h2>
 
           <p>
-            Email <strong>test@user.com</strong>
+            Email <strong>{currentUser.email}</strong>
           </p>
           <Link to="/update-profile" className="btn btn-primary w-100">
             Update Profile

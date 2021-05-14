@@ -5,6 +5,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import UpdateProfile from "./UpdateProfile";
 import ResetPassword from "./ResetPassword";
+import { AuthProvider } from "../contexts/AuthContext";
 
 function App() {
   return (
@@ -14,11 +15,13 @@ function App() {
     >
       <Router>
         <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/update-profile" component={UpdateProfile} />
-          <Route path="/reset-password" component={ResetPassword} />
+          <AuthProvider>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/update-profile" component={UpdateProfile} />
+            <Route path="/reset-password" component={ResetPassword} />
+          </AuthProvider>
         </Switch>
       </Router>
     </Container>
