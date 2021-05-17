@@ -3,25 +3,48 @@ import { auth } from "../firebase";
 
 const AuthContext = React.createContext();
 
-export const useAuth = useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({
-    email: "hello@aremusmog.com",
-    password: "email",
-  });
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => setCurrentUser(user));
-  });
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
 
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
   };
 
+  const login = (email, password) => {
+    return auth.signInWithEmailAndPassword(email, password);
+  };
+
+  const resetPassword = (email) => {
+    return auth.sendPasswordResetEmail(email);
+  };
+
+  const logout = (email) => {
+    return auth.signOut();
+  };
+
   const value = {
     currentUser,
     signup,
+    login,
+    resetPassword,
+    logout,
   };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
