@@ -27,11 +27,18 @@ export const AuthProvider = ({ children }) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
+  const updateEmail = (email) => {
+    return currentUser.updateEmail(email);
+  };
+
+  const updatePassword = (password) => {
+    return currentUser.updatePassword(password);
+  };
   const resetPassword = (email) => {
     return auth.sendPasswordResetEmail(email);
   };
 
-  const logout = (email) => {
+  const logout = () => {
     return auth.signOut();
   };
 
@@ -41,6 +48,8 @@ export const AuthProvider = ({ children }) => {
     login,
     resetPassword,
     logout,
+    updateEmail,
+    updatePassword,
   };
   return (
     <AuthContext.Provider value={value}>

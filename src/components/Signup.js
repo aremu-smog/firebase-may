@@ -1,12 +1,34 @@
-import React, { useRef } from "react";
-import { Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Signup = () => {
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const { signup } = useAuth();
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert("Sign up");
+    setLoading(true);
+
+    if (passwordRef.current.value === passwordAgainRef.current.value) {
+      try {
+        setErrorMessage("");
+        await signup(emailRef.current.value, passwordRef.current.value);
+        history.push("/login");
+      } catch {
+        setErrorMessage("Failed to sign you up. Kindly try again");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setErrorMessage("Password mismatch");
+      setLoading(false);
+    }
   };
 
   const emailRef = useRef();
@@ -16,6 +38,11 @@ const Signup = () => {
     <div style={{ minWidth: "400px" }}>
       <Card className="w-100">
         <Card.Body>
+          {errorMessage && (
+            <Alert variant="danger" dismissible>
+              {errorMessage}
+            </Alert>
+          )}
           <h2 className="text-center mb-4">Signup</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mt-2" controlId="email">
@@ -30,8 +57,13 @@ const Signup = () => {
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control ref={passwordAgainRef} type="password" />
             </Form.Group>
-            <Button type="submit" variant="primary" className="w-100 mt-4">
-              Sign up
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={loading}
+              className="w-100 mt-4"
+            >
+              {loading ? "Hang on..." : "Sign up"}
             </Button>
           </Form>
           <p className="text-center mt-4">
