@@ -5,19 +5,16 @@ const AuthContext = React.createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState();
+const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
-
       setLoading(false);
     });
-
-    return unsubscribe;
-  }, []);
+  });
 
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -34,22 +31,23 @@ export const AuthProvider = ({ children }) => {
   const updatePassword = (password) => {
     return currentUser.updatePassword(password);
   };
-  const resetPassword = (email) => {
-    return auth.sendPasswordResetEmail(email);
-  };
 
   const logout = () => {
     return auth.signOut();
   };
 
+  const resetPassword = (email) => {
+    return auth.sendPasswordResetEmail(email);
+  };
+
   const value = {
-    currentUser,
     signup,
     login,
-    resetPassword,
-    logout,
     updateEmail,
     updatePassword,
+    logout,
+    resetPassword,
+    currentUser,
   };
   return (
     <AuthContext.Provider value={value}>
@@ -57,3 +55,7 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+AuthProvider.propTypes = {};
+
+export default AuthProvider;

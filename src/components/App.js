@@ -5,7 +5,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import UpdateProfile from "./UpdateProfile";
 import ResetPassword from "./ResetPassword";
-import { AuthProvider } from "../contexts/AuthContext";
+import AuthProvider from "../contexts/AuthContext";
 import PrivateRoute from "./PrivateRoute";
 
 function App() {
